@@ -8,12 +8,15 @@ import {
 } from "lucide-react";
 
 interface SidebarProps {
-  activeView: "dashboard" | "candidate";
-  onNavigate: (view: "dashboard") => void;
+  activeView: "dashboard" | "candidate" | "upload";
+  onNavigate: (view: "dashboard" | "upload") => void;
 }
 
+import { Upload } from "lucide-react";
+
 const menuItems = [
-  { icon: LayoutDashboard, label: "Dashboard", active: true },
+  { icon: LayoutDashboard, label: "Dashboard", view: "dashboard" as const },
+  { icon: Upload, label: "Upload & Analyze", view: "upload" as const },
   { icon: Inbox, label: "Inbox", badge: 12 },
   { icon: Calendar, label: "Calendar Agent" },
   { icon: Users, label: "Candidates" },
@@ -39,9 +42,9 @@ export function Sidebar({ activeView, onNavigate }: SidebarProps) {
           {menuItems.map((item) => (
             <li key={item.label}>
               <button
-                onClick={() => item.label === "Dashboard" && onNavigate("dashboard")}
+                onClick={() => item.view && onNavigate(item.view)}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  item.active && activeView === "dashboard"
+                  item.view === activeView
                     ? "bg-primary/10 text-primary"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
