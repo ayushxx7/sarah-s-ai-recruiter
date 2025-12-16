@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Upload, FileText, Briefcase, ArrowRight, Sparkles, CheckCircle } from "lucide-react";
 import { AnalysisResult } from "@/types/analysis";
 import { toast } from "sonner";
+import { extractTextFromPDF, isPDF } from "@/lib/pdfParser";
 
 interface UploadViewProps {
   onAnalyze: (result: AnalysisResult) => void;
@@ -16,6 +17,11 @@ export function UploadView({ onAnalyze }: UploadViewProps) {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const readFileContent = async (file: File): Promise<string> => {
+    // Handle PDF files
+    if (isPDF(file)) {
+      return await extractTextFromPDF(file);
+    }
+    // Handle text files
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => resolve(e.target?.result as string);
