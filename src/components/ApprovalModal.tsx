@@ -1,29 +1,24 @@
 import { X, Sparkles, Send } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 interface ApprovalModalProps {
   isOpen: boolean;
   onClose: () => void;
+  emailDraft: { subject: string; body: string };
+  candidateName: string;
 }
 
-const emailDraft = {
-  to: "alex.chen@email.com",
-  subject: "Interview Request: Senior Tech Lead Role @ TechCorp",
-  body: `Hi Alex,
-
-I was impressed by your portfolio, specifically the case study on scalable design systems. It aligns perfectly with what we are building here.
-
-I'd love to chat. Are you free this Tuesday at 2:00 PM or Wednesday at 10:00 AM?
-
-Looking forward to hearing from you.
-
-Best,
-Sarah`,
-};
-
-export function ApprovalModal({ isOpen, onClose }: ApprovalModalProps) {
+export function ApprovalModal({ isOpen, onClose, emailDraft, candidateName }: ApprovalModalProps) {
   const [autoReply, setAutoReply] = useState(true);
   const [isSending, setIsSending] = useState(false);
+  const [subject, setSubject] = useState(emailDraft.subject);
+  const [body, setBody] = useState(emailDraft.body);
+
+  useEffect(() => {
+    setSubject(emailDraft.subject);
+    setBody(emailDraft.body);
+  }, [emailDraft]);
 
   if (!isOpen) return null;
 
@@ -31,6 +26,7 @@ export function ApprovalModal({ isOpen, onClose }: ApprovalModalProps) {
     setIsSending(true);
     setTimeout(() => {
       setIsSending(false);
+      toast.success(`Email sent to ${candidateName}!`);
       onClose();
     }, 1500);
   };
@@ -54,7 +50,7 @@ export function ApprovalModal({ isOpen, onClose }: ApprovalModalProps) {
         <div className="flex items-center justify-between px-6 pt-4 pb-6">
           <div>
             <h2 className="text-xl font-bold text-foreground">Review Agent Draft</h2>
-            <p className="text-sm text-muted-foreground">Sending to {emailDraft.to}</p>
+            <p className="text-sm text-muted-foreground">Sending to {candidateName}</p>
           </div>
           <button 
             onClick={onClose}
@@ -77,9 +73,11 @@ export function ApprovalModal({ isOpen, onClose }: ApprovalModalProps) {
           {/* Subject */}
           <div>
             <label className="text-sm font-medium text-foreground">Subject</label>
-            <div className="mt-1.5 p-3 bg-muted rounded-lg text-sm text-foreground">
-              {emailDraft.subject}
-            </div>
+            <input 
+              className="mt-1.5 w-full p-3 bg-muted rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            />
           </div>
 
           {/* Body */}
@@ -90,7 +88,8 @@ export function ApprovalModal({ isOpen, onClose }: ApprovalModalProps) {
             </div>
             <textarea 
               className="mt-1.5 w-full p-3 bg-muted rounded-lg text-sm text-foreground resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 min-h-[180px]"
-              defaultValue={emailDraft.body}
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
             />
           </div>
         </div>
