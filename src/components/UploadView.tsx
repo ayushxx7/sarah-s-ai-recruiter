@@ -41,7 +41,7 @@ export function UploadView({ onAnalyze }: UploadViewProps) {
       formData.append("resume_file", resumeFile);
       formData.append("jd_file", jdFile);
 
-      const response = await fetch("https://thevibecoder1947.app.n8n.cloud/webhook-test/resume-analysis", {
+      const response = await fetch("https://thevibecoder1947.app.n8n.cloud/webhook/resume-analysis", {
         method: "POST",
         body: formData,
       });
