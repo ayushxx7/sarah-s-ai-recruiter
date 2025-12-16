@@ -1,33 +1,88 @@
 import { useState } from "react";
 import { Upload, FileText, Briefcase, ArrowRight, Sparkles, CheckCircle } from "lucide-react";
+import { AnalysisResult } from "@/types/analysis";
+import { toast } from "sonner";
 
 interface UploadViewProps {
-  onAnalyze: () => void;
+  onAnalyze: (result: AnalysisResult) => void;
 }
 
 export function UploadView({ onAnalyze }: UploadViewProps) {
   const [jdFile, setJdFile] = useState<File | null>(null);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [jdContent, setJdContent] = useState<string>("");
+  const [resumeContent, setResumeContent] = useState<string>("");
+  const [candidateName, setCandidateName] = useState<string>("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  const handleJdUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const readFileContent = async (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target?.result as string);
+      reader.onerror = reject;
+      reader.readAsText(file);
+    });
+  };
+
+  const handleJdUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
-      setJdFile(e.target.files[0]);
+      const file = e.target.files[0];
+      setJdFile(file);
+      try {
+        const content = await readFileContent(file);
+        setJdContent(content);
+      } catch {
+        toast.error("Failed to read JD file");
+      }
     }
   };
 
-  const handleResumeUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleResumeUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
-      setResumeFile(e.target.files[0]);
+      const file = e.target.files[0];
+      setResumeFile(file);
+      try {
+        const content = await readFileContent(file);
+        setResumeContent(content);
+        // Extract name from filename or use default
+        const nameFromFile = file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+        setCandidateName(nameFromFile);
+      } catch {
+        toast.error("Failed to read resume file");
+      }
     }
   };
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
+    if (!jdContent || !resumeContent) {
+      toast.error("Please upload both files");
+      return;
+    }
+
     setIsAnalyzing(true);
-    setTimeout(() => {
+    try {
+      const response = await fetch("https://thevibecoder1947.app.n8n.cloud/webhook-test/resume-analysis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          candidate_name: candidateName || "Candidate",
+          resume_content: resumeContent,
+          job_description: jdContent,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Analysis failed");
+
+      const result: AnalysisResult = await response.json();
+      result.candidate_name = candidateName || "Candidate";
+      toast.success("Analysis complete!");
+      onAnalyze(result);
+    } catch (error) {
+      console.error("Analysis error:", error);
+      toast.error("Failed to analyze. Please try again.");
+    } finally {
       setIsAnalyzing(false);
-      onAnalyze();
-    }, 2000);
+    }
   };
 
   const bothUploaded = jdFile && resumeFile;

@@ -1,31 +1,35 @@
 import { ArrowLeft, MapPin, Sparkles, CheckCircle, AlertTriangle, FileText, MoreHorizontal } from "lucide-react";
+import { AnalysisResult } from "@/types/analysis";
 
 interface CandidateViewProps {
   onBack: () => void;
-  onApprove: () => void;
+  onApprove: (emailDraft: { subject: string; body: string }) => void;
+  analysis: AnalysisResult | null;
 }
 
-const candidate = {
-  name: "Alex Chen",
-  role: "Tech Lead @ FintechFlow",
-  location: "San Francisco (Remote)",
+const defaultAnalysis: AnalysisResult = {
   score: 92,
-  level: "Senior Level",
-};
-
-const insights = {
-  summary: "Strong match. Alex demonstrates exceptional alignment with the Senior Tech Lead requirements, particularly with his 7 years of Python experience and recent leadership at a high-growth fintech startup.",
-  strengths: [
+  status: "Interview",
+  summary: "Strong match. Alex demonstrates exceptional alignment with the Senior Tech Lead requirements.",
+  pros: [
     "Direct experience scaling payment infrastructure similar to our roadmap.",
     "Proven track record of managing distributed teams (5+ engineers).",
   ],
-  risks: [
+  cons: [
     "Salary expectation is slightly above the posted range base.",
     "Short tenure (1.5 years) at current role compared to history.",
   ],
+  email_draft: {
+    Subject: "Interview Invitation",
+    body: "We would like to invite you for an interview.",
+  },
+  candidate_name: "Alex Chen",
 };
 
-export function CandidateView({ onBack, onApprove }: CandidateViewProps) {
+export function CandidateView({ onBack, onApprove, analysis }: CandidateViewProps) {
+  const data = analysis || defaultAnalysis;
+  const initials = data.candidate_name.split(" ").map(n => n[0]).join("").toUpperCase();
+  const statusColor = data.status === "Interview" ? "success" : data.status === "Rejected" ? "destructive" : "warning";
   return (
     <div className="flex-1 flex flex-col h-screen overflow-hidden">
       {/* Header */}
@@ -49,20 +53,19 @@ export function CandidateView({ onBack, onApprove }: CandidateViewProps) {
         {/* Candidate Info */}
         <div className="flex items-center gap-4 mb-6 animate-fade-in">
           <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-xl font-bold text-primary">
-            AC
+            {initials}
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-3">
-              <h2 className="text-xl font-bold text-foreground">{candidate.name}</h2>
-              <span className="text-xs font-medium text-muted-foreground border border-border px-2 py-1 rounded-full">
-                {candidate.level}
+              <h2 className="text-xl font-bold text-foreground">{data.candidate_name}</h2>
+              <span className={`text-xs font-medium px-2 py-1 rounded-full ${
+                statusColor === "success" ? "bg-success/10 text-success" : 
+                statusColor === "destructive" ? "bg-destructive/10 text-destructive" : "bg-warning/10 text-warning"
+              }`}>
+                {data.status}
               </span>
             </div>
-            <p className="text-sm text-muted-foreground">{candidate.role}</p>
-            <div className="flex items-center gap-1 mt-1 text-sm text-muted-foreground">
-              <MapPin className="w-3.5 h-3.5" />
-              {candidate.location}
-            </div>
+            <p className="text-sm text-muted-foreground">Candidate Analysis</p>
           </div>
         </div>
 
@@ -96,18 +99,22 @@ export function CandidateView({ onBack, onApprove }: CandidateViewProps) {
                 stroke="hsl(var(--success))"
                 strokeWidth="8"
                 strokeLinecap="round"
-                strokeDasharray={`${(candidate.score / 100) * 352} 352`}
+                strokeDasharray={`${(data.score / 100) * 352} 352`}
                 className="transition-all duration-1000 ease-out"
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-3xl font-bold text-foreground">{candidate.score}</span>
+              <span className="text-3xl font-bold text-foreground">{data.score}</span>
               <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Match</span>
             </div>
           </div>
-          <div className="flex items-center gap-2 mt-4 bg-success/10 text-success px-3 py-1.5 rounded-full">
+          <div className={`flex items-center gap-2 mt-4 px-3 py-1.5 rounded-full ${
+            data.score >= 80 ? "bg-success/10 text-success" : data.score >= 60 ? "bg-warning/10 text-warning" : "bg-destructive/10 text-destructive"
+          }`}>
             <CheckCircle className="w-4 h-4" />
-            <span className="text-sm font-medium">Recommended for Interview</span>
+            <span className="text-sm font-medium">
+              {data.score >= 80 ? "Recommended for Interview" : data.score >= 60 ? "Consider for Interview" : "Not Recommended"}
+            </span>
           </div>
         </div>
 
@@ -119,7 +126,7 @@ export function CandidateView({ onBack, onApprove }: CandidateViewProps) {
           </div>
 
           <p className="text-sm text-foreground leading-relaxed mb-6">
-            <span className="font-semibold">Strong match.</span> {insights.summary}
+            {data.summary}
           </p>
 
           <div className="mb-4">
@@ -127,10 +134,10 @@ export function CandidateView({ onBack, onApprove }: CandidateViewProps) {
               Key Strengths
             </h4>
             <ul className="space-y-2">
-              {insights.strengths.map((strength, i) => (
+              {data.pros.map((pro, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm text-foreground">
                   <CheckCircle className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
-                  {strength}
+                  {pro}
                 </li>
               ))}
             </ul>
@@ -141,10 +148,10 @@ export function CandidateView({ onBack, onApprove }: CandidateViewProps) {
               Potential Risks
             </h4>
             <ul className="space-y-2">
-              {insights.risks.map((risk, i) => (
+              {data.cons.map((con, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm text-foreground">
                   <AlertTriangle className="w-4 h-4 text-warning mt-0.5 flex-shrink-0" />
-                  {risk}
+                  {con}
                 </li>
               ))}
             </ul>
@@ -177,7 +184,7 @@ export function CandidateView({ onBack, onApprove }: CandidateViewProps) {
           Reject
         </button>
         <button 
-          onClick={onApprove}
+          onClick={() => onApprove({ subject: data.email_draft.Subject, body: data.email_draft.body })}
           className="flex-1 py-3 px-4 bg-foreground text-background rounded-lg text-sm font-medium hover:bg-foreground/90 transition-colors flex items-center justify-center gap-2"
         >
           <ArrowLeft className="w-4 h-4 rotate-[135deg]" />
