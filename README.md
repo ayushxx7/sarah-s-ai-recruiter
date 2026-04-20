@@ -8,21 +8,7 @@
 
 **Sarah's AI Recruiter** is a modern, AI-driven recruitment platform designed to streamline the hiring process. Built with React, TypeScript, and shadcn-ui, it provides a seamless interface for managing candidates, interviews, and feedback.
 
-## 🎬 Showcase Gallery
-| 🏠 Candidate Dashboard | 📊 Hiring Analytics |
-| :---: | :---: |
-| ![Dashboard](https://raw.githubusercontent.com/ayushxx7/sarah-s-ai-recruiter/main/showcase/dashboard.png) | ![Analytics](https://raw.githubusercontent.com/ayushxx7/sarah-s-ai-recruiter/main/showcase/analytics.png) |
-
-## 📊 Repo Health: 90 / 100 (High Readiness)
-This project is production-ready and follows modern frontend best practices.
-
-| Category | Item | Status | Score |
-| :--- | :--- | :--- | :--- |
-| **Documentation** | README & LICENSE | ✅ Complete | 15 / 15 |
-| **Security** | Secret Scan & .gitignore | ✅ Secure | 15 / 15 |
-| **Automation** | Vite & Bun Support | ✅ Working | 20 / 20 |
-| **Showcase** | High-res Assets | ⚠️ Pending | 10 / 20 |
-| **Distribution** | Lovable Platform | ✅ Active | 30 / 30 |
+`✅ AI Talent Acquisition | ✅ React 18+ | ✅ MIT Licensed | ✅ Vite/Bun Optimized`
 
 ## 🚀 Getting Started
 
