@@ -26,6 +26,29 @@ This project is production-ready and follows modern frontend best practices.
 
 ## 🚀 Getting Started
 
+## 🏗 Architecture
+The application is built with a modern React component-based architecture, utilizing atomic design principles for UI components and custom hooks for business logic.
+
+```mermaid
+graph TD
+    A[Vite/Bun] --> B[App / Layout]
+    B --> C[Pages / Routes]
+    C --> D[Dashboard]
+    C --> E[Upload View]
+    C --> F[Candidate View]
+    D --> G[Shadcn UI Components]
+    E --> G
+    F --> G
+    B --> H[Custom Hooks]
+    H --> I[Toast / Mobile Detection]
+```
+
+### Core Components
+- **Pages (`src/pages/`)**: Top-level route components for Dashboard, Analysis, and Uploads.
+- **Components (`src/components/`)**: Functional components including Sidebar, NavLinks, and specialized Modals.
+- **UI Kit (`src/components/ui/`)**: Reusable shadcn/ui primitives for consistent design.
+- **Logic Layers (`src/lib/` & `src/hooks/`)**: Utility functions and custom React hooks for state and interaction management.
+
 ## What technologies are used for this project?
 
 This project is built with:
