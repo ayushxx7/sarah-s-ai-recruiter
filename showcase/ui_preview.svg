@@ -1,0 +1,42 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" rx="10" fill="#FFFFFF"/>
+  
+  <!-- Sidebar -->
+  <rect width="220" height="500" rx="10" fill="#F8F9FA" stroke="#E9ECEF"/>
+  <rect x="20" y="40" width="180" height="30" rx="5" fill="#000" opacity="0.05"/>
+  <text x="35" y="60" fill="#212529" font-family="Arial" font-size="14" font-weight="bold">🏠 Dashboard</text>
+  
+  <text x="35" y="100" fill="#6C757D" font-family="Arial" font-size="14">👥 Candidates</text>
+  <text x="35" y="140" fill="#6C757D" font-family="Arial" font-size="14">📅 Interviews</text>
+  <text x="35" y="180" fill="#6C757D" font-family="Arial" font-size="14">⚙️ Settings</text>
+
+  <!-- Main Area -->
+  <text x="250" y="60" fill="#212529" font-family="Arial" font-size="24" font-weight="bold">AI Recruitment Overview</text>
+  
+  <!-- Stats Cards -->
+  <rect x="250" y="100" width="160" height="100" rx="10" fill="white" stroke="#E9ECEF"/>
+  <text x="270" y="140" fill="#6C757D" font-family="Arial" font-size="12">Total Candidates</text>
+  <text x="270" y="175" fill="#212529" font-family="Arial" font-size="28" font-weight="bold">1,245</text>
+
+  <rect x="430" y="100" width="160" height="100" rx="10" fill="white" stroke="#E9ECEF"/>
+  <text x="450" y="140" fill="#6C757D" font-family="Arial" font-size="12">AI Scored</text>
+  <text x="450" y="175" fill="#00FF00" font-family="Arial" font-size="28" font-weight="bold">892</text>
+
+  <!-- Candidate Table -->
+  <rect x="250" y="230" width="520" height="240" rx="10" fill="white" stroke="#E9ECEF"/>
+  <text x="270" y="265" fill="#212529" font-family="Arial" font-size="16" font-weight="bold">Recent Top Matches</text>
+  
+  <rect x="270" y="285" width="480" height="40" rx="5" fill="#F8F9FA"/>
+  <text x="285" y="310" fill="#212529" font-family="Arial" font-size="12">John Doe | Full Stack Engineer | Score: 98%</text>
+  
+  <rect x="270" y="335" width="480" height="40" rx="5" fill="white"/>
+  <text x="285" y="360" fill="#212529" font-family="Arial" font-size="12">Jane Smith | AI Researcher | Score: 95%</text>
+  
+  <rect x="270" y="385" width="480" height="40" rx="5" fill="#F8F9FA"/>
+  <text x="285" y="410" fill="#212529" font-family="Arial" font-size="12">Alex Vibe | Frontend Dev | Score: 92%</text>
+
+  <!-- AI Pulse -->
+  <circle cx="750" cy="50" r="10" fill="#8E44AD" opacity="0.5"/>
+  <circle cx="750" cy="50" r="6" fill="#8E44AD"/>
+  <text x="670" y="55" fill="#8E44AD" font-family="Arial" font-size="12" font-weight="bold">AI ACTIVE</text>
+</svg>

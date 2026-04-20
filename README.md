@@ -4,16 +4,16 @@
 [![Tested on Gemini](https://img.shields.io/badge/Tested_on-Gemini_CLI-8E44AD?style=for-the-badge&logo=google-gemini&logoColor=white)](https://github.com/google/gemini-cli)
 [![Tech Stack: React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
 [![UI: shadcn/ui](https://img.shields.io/badge/UI-shadcn--ui-000000?style=for-the-badge&logo=shadcnui&logoColor=white)](https://ui.shadcn.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 **Sarah's AI Recruiter** is a modern, AI-driven recruitment platform designed to streamline the hiring process. Built with React, TypeScript, and shadcn-ui, it provides a seamless interface for managing candidates, interviews, and feedback.
 
 `✅ AI Talent Acquisition | ✅ React 18+ | ✅ MIT Licensed | ✅ Vite/Bun Optimized`
 
-## 🚀 Getting Started
+## 🎬 UI Preview
+![UI Preview](showcase/ui_preview.svg)
 
 ## 🏗 Architecture
-The application is built with a modern React component-based architecture, utilizing atomic design principles for UI components and custom hooks for business logic.
+The application is built with a modern React component-based architecture, utilizing atomic design principles and custom hooks for business logic.
 
 ```mermaid
 graph TD
@@ -30,24 +30,22 @@ graph TD
 ```
 
 ### Core Components
-- **Pages (`src/pages/`)**: Top-level route components for Dashboard, Analysis, and Uploads.
-- **Components (`src/components/`)**: Functional components including Sidebar, NavLinks, and specialized Modals.
-- **UI Kit (`src/components/ui/`)**: Reusable shadcn/ui primitives for consistent design.
-- **Logic Layers (`src/lib/` & `src/hooks/`)**: Utility functions and custom React hooks for state and interaction management.
+- **Pages**: Top-level route components for Dashboard, Analysis, and Uploads.
+- **Components**: Functional components including Sidebar, NavLinks, and specialized Modals.
+- **UI Kit**: Reusable shadcn/ui primitives for consistent design.
+- **Logic Layers**: Custom hooks for state management and interactive feedback.
 
-## What technologies are used for this project?
+## 🛠 Tech Stack
+- **Framework**: React 18+ (TypeScript)
+- **Styling**: Tailwind CSS & shadcn/ui
+- **Build Tool**: Vite / Bun
+- **Platform**: Lovable
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 🚀 Getting Started
+```bash
+npm install
+npm run dev
+```
 
 ## 📜 License
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
